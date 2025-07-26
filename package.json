@@ -1,0 +1,25 @@
+{
+  "name": "q.a-luma-store",
+  "version": "1.0.0",
+  "description": "Este é um desafio para que possamos ver as suas habilidades como QA/Tester.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guilhermeytalo/q.a-luma-store.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guilhermeytalo/q.a-luma-store/issues"
+  },
+  "homepage": "https://github.com/guilhermeytalo/q.a-luma-store#readme",
+  "devDependencies": {
+    "cypress": "^14.5.3",
+    "cypress-cucumber-preprocessor": "^4.3.1",
+    "mochawesome": "^7.1.3"
+  }
+}

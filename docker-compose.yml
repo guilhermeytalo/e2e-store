@@ -1,0 +1,6 @@
+services:
+  cypress:
+    build: .
+    volumes:
+      - .:/e2e
+    container_name: cypress-tests
