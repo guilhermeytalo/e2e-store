@@ -13,7 +13,7 @@ export async function getUserData(useApi = false) {
     };
   }
 
-  const response = await fetch('https://randomuser.me/api/');
+  const response = await fetch('https://randomuser.me/api/?nat=us');
   const data = await response.json();
   const user = data.results[0];
 
@@ -25,7 +25,7 @@ export async function getUserData(useApi = false) {
     city: user.location.city,
     state: user.location.state,
     zip: user.location.postcode.toString(),
-    country: 'United States',
+    country: user.location.country,
     phone: user.phone.replace(/[^\d]/g, '').slice(0, 10)
   };
 }

@@ -1,7 +1,7 @@
 import { getUserData } from '../support/utils/userData';
 
 describe('Checkout Page', () => {
-    it('should load the homepage successfully and go to checkout', () => {
+    beforeEach(() => {
         cy.intercept('GET', '**/catalogsearch/searchTermsLog/save/**').as('searchTermsLog');
         cy.intercept('GET', '**/catalogsearch/**').as('catalogSearch');
         cy.intercept('POST', '**/checkout/cart/add/**').as('addToCart');
@@ -47,8 +47,44 @@ describe('Checkout Page', () => {
             expect(interception.response.statusCode).to.equal(200);
             console.log('Checkout carregado:', interception.response);
         });
-        
+        cy.get('#shipping').should('be.visible');
+    });
+
+    it('should display checkout page with shipping section', () => {
+        cy.url().should('include', '/checkout/#shipping');
         cy.get('#shipping').should('contain', 'Shipping Address');
+    });
+
+
+    it('should fill out the shipping form and proceed to payment', () => {
+        const useApi = true;
+
+        cy.wrap(getUserData(useApi)).then((user) => {
+            cy.wait(1000);
+
+            cy.get('#customer-email').should('have.length', 1).type(user.email);
+            cy.get('input[name="firstname"]').type(user.firstName);
+            cy.get('input[name="lastname"]').type(user.lastName);
+
+            cy.get('input[name="street[0]"]').type(user.street[0]);
+            if (user.street[1]) cy.get('input[name="street[1]"]').type(user.street[1]);
+            if (user.street[2]) cy.get('input[name="street[2]"]').type(user.street[2]);
+
+            cy.get('input[name="city"]').type(user.city);
+            cy.get('select[name="region_id"]').select(user.state);
+            cy.get('input[name="postcode"]').type(user.zip);
+            cy.get('select[name="country_id"]').select(user.country);
+            cy.get('input[name="telephone"]').type(user.phone);
+
+            cy.get('input[name="ko_unique_1"]').check();
+            cy.get('input[name="ko_unique_2"]').check();
+            cy.contains('button', 'Next').click();
+
+
+            cy.url().should('include', 'checkout/#payment');
+            cy.get('.payment-group > .step-title').should('contain', 'Payment Method');
+            cy.contains('button', 'Place Order').click();
+        });
     });
 });
 
