@@ -1,3 +1,5 @@
+import 'cypress-mochawesome-reporter/register'
+
 describe('Cart Page', () => {
     it('should load the homepage successfully and add a product to the cart', () => {
         cy.intercept('GET', '**/catalogsearch/searchTermsLog/save/**').as('searchTermsLog');

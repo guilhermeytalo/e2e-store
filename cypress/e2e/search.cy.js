@@ -1,3 +1,5 @@
+import 'cypress-mochawesome-reporter/register'
+
 describe('Search Page', () => {
     it('should load the homepage successfully search the propduct and click on it', () => {
         cy.intercept('GET', '**/catalogsearch/searchTermsLog/save/**').as('searchTermsLog');

@@ -1,4 +1,5 @@
 import { getUserData } from '../support/utils/userData';
+import 'cypress-mochawesome-reporter/register'
 
 describe('Checkout Page', () => {
     beforeEach(() => {
