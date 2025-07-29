@@ -53,7 +53,7 @@ describe('Cart Page', () => {
 
     cy.wait('@addToCart').its('response.statusCode').should('eq', 200);
     cy.wait('@loadedCart').its('response.statusCode').should('eq', 200);
-
+    cy.wait(3000);
     cy.contains('You added').should('be.visible');
   });
 });

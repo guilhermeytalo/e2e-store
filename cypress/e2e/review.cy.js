@@ -20,6 +20,7 @@ describe('Review Product', () => {
         cy.get('body').should('be.visible');
         cy.title().should('include', 'Home Page');
 
+        cy.get('#ui-id-5').contains('Men').should('be.visible')
         cy.get('#ui-id-5').should('be.visible').and('contain', 'Men').click();
 
         cy.get('.products-grid').then($items => {
