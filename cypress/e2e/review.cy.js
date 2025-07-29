@@ -14,6 +14,9 @@ describe('Review Product', () => {
 
 
     it('should load the homepage go to the product and review', () => {
+        cy.intercept('POST', '**/review/product/post/id/**').as('submitReview');
+
+
         cy.visit('/');
         cy.get('body').should('be.visible');
         cy.title().should('include', 'Home Page');
@@ -34,6 +37,11 @@ describe('Review Product', () => {
             cy.get('input[name="title"]').type(randomReview);
             cy.get('textarea[name="detail"]').type('Este é um review de produto!');
             cy.contains('button', 'Submit Review').click();
+        });
+
+        cy.wait('@submitReview').then((interception) => {
+            expect(interception.response.statusCode).to.equal(302);
+            console.log('Review submitted:', interception.response);
         });
 
         cy.get('.message-success').should('be.visible').and('contain', 'You submitted your review');
