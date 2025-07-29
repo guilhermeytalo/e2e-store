@@ -1,65 +1,189 @@
 # Q.A Challenge Luma Store
 
-Este é um desafio para que possamos ver as suas habilidades como QA/Tester.
+Este é um projeto de automação de testes E2E para o site Luma Store utilizando Cypress.
 
-Nesse desafio você deverá testar de forma automatizada o site Luma Store. O projeto a ser desenvolvido por você tem como objetivo exibir executar ações na loja conforme indicado nos casos de uso que estão logo abaixo.
+## Descrição
 
-[SPOILER] As instruções de entrega e apresentação do challenge estão no final deste Readme (=
+Projeto desenvolvido como desafio técnico para QA/Tester, implementando testes automatizados de caixa preta no site https://magento.softwaretestingboard.com. O objetivo é validar funcionalidades críticas da loja através de cenários automatizados que simulam o comportamento real do usuário.
 
-### Antes de começar
- 
-- Considere como prazo limite da avaliação o período a partir do início do teste. Se, por algum motivo, não for possível concluir dentro deste prazo, avise a pessoa que o convidou para receber instruções sobre o que fazer.
-- Documente todo o processo de investigação para o desenvolvimento da atividade (README.md no seu repositório); os resultados destas tarefas são tão importantes quanto o seu processo de pensamento e decisões à medida que as completa, por isso, tente documentar e apresentar as suas hipóteses e decisões na medida do possível.
+## Tecnologias Utilizadas
 
+- **Ferramenta de Teste**: [Cypress 14.x](https://www.cypress.io/)
+- **Linguagem**: [JavaScript](https://www.javascript.com/)
+- **Containerização**: [Docker](https://www.docker.com/)
+- **Relatórios**: [Mochawesome](https://www.npmjs.com/package/mochawesome)
+- **Geração de Dados**: [Random User API](https://randomuser.me/)
 
-#### Tecnologias:
-- Ferramenta: Ghost Inspector, Selenium, Cypress, Robot Framework, ou outro de seu conhecimento
-- Adicionais: Cucumber ou outros plugins necessários para configurar a ferramenta
+## Por que Cypress?
 
-## Teste
+### Vantagens do Cypress:
+- **Produtividade**: Interface intuitiva e debugging em tempo real
+- **Facilidade de Setup**: Não requer configuração complexa de WebDrivers
+- **Execução em Tempo Real**: Visualização dos testes sendo executados
+- **Debugging Avançado**: Time travel e snapshots automáticos
+- **Integração CI/CD**: Fácil integração com pipelines
+- **API Moderna**: Promessas nativas e sintaxe mais limpa
+- **Interceptação de Requisições**: Controle total sobre chamadas de rede
 
-Neste desafio aplicaremos os conceitos de teste caixa preta, onde testaremos a página https://magento.softwaretestingboard.com
+### Desvantagens das Outras Ferramentas:
 
-> Nota: utilize dados fictícios criados através do site https://randomuser.me
+**Selenium**:
+- Mais verboso e complexo para configurar
+- Requer gerenciamento manual de WebDrivers
+- Debugging mais difícil
+- Configuração de ambiente mais trabalhosa
+- Testes mais lentos devido à arquitetura
 
-**Obrigatório 1** - Para realizar o teste precisamos escolher a ferramenta de teste. Explicar o por quê da escolha, as vantagens e desvantagens dos que não foram escolhidos.
+**Robot Framework**:
+- Sintaxe menos intuitiva para desenvolvedores JavaScript
+- Menos flexível para aplicações web modernas
+- Curva de aprendizado maior
+- Manutenção mais complexa em projetos grandes
 
-**Obrigatório 2** - Você deverá atender aos seguintes casos de uso:
+**Ghost Inspector**:
+- Ferramenta proprietária com limitações
+- Dependente de interface gráfica
+- Menor controle sobre os testes
+- Dificuldade de versionamento e colaboração
+- Limitações em cenários complexos
 
-- Se a página está carregando corretamente a home page;
-- Buscar por `shirt` no menu superior e revisar se a página de resultados carregou corretamente. Veja o diferencial 1 para incrementar este caso de uso;
-- Adicionar um produto no carrinho
-- Realizar checkout
+## Como Instalar e Executar
 
-### Diferenciais
-Além do que foi solicitado, existem itens adicionais para incrementar o projeto final. Você também pode adicionar algum recurso não citado anteriormente.
+### Pré-requisitos
+- [Docker](https://www.docker.com/) instalado
+- OU Node.js 16+ (para execução local)
 
-- **Diferencial 1** - Buscar por `shirt` no menu superior e clicar no último resultado sugerido. Se possível, escute o retorno da requisição para saber o momento de clicar na interface;
-- **Diferencial 2** - Criar uma conta na tela de Login/Cadastro. Observe que existe um captcha no formulário, então é necessário decidir como abordar este campo;
-- **Diferencial 3** - Adicionar um produto **aleatório** do catalogo de moda masculina no carrinho;
-- **Diferencial 4** - Adicionar comentário em um produto **aleatório** do catálogo de moda masculina no carrinho;
-- **Diferencial 5** - Gerar um relatório automático do teste.
+### Execução com Docker (Recomendado)
+```bash
+# Clonar o repositório
+git clone https://github.com/guilhermeytalo/q.a-luma-store.git
+cd qa-challenge-luma-store
 
-## Readme do Repositório
+# Executar os testes
+docker compose up
+```
 
-- Deve conter o título do projeto
-- Uma descrição sobre o projeto em frase
-- Deve conter uma lista com linguagem, framework e/ou tecnologias usadas
-- Como instalar e usar o projeto (instruções)
-- Não esqueça o [.gitignore](https://www.toptal.com/developers/gitignore)
-- Se está usando github pessoal, referencie que é um challenge by coodesh:  
+### Execução Local
+```bash
+# Instalar dependências
+npm install
 
->  This is a challenge by [Coodesh](https://coodesh.com/)
+# Abrir interface do Cypress
+npx cypress open
 
-## Finalização e Instruções para a Apresentação
+# Executar testes via terminal
+npx cypress run
 
-1. Adicione o link do repositório com a sua solução no teste
-2. Verifique se o Readme está bom e faça o commit final em seu repositório;
-3. Envie e aguarde as instruções para seguir. Sucesso e boa sorte. =)
+# Gerar relatório
+npm run test:report
+```
 
-## Suporte
+## Estrutura do Projeto
+```
+cypress/
+├── e2e/
+│   ├── account.cy.js
+│   ├── cart.cy.js
+│   ├── checkout.cy.js
+│   ├── home.cy.js
+│   ├── review.cy.js
+│   └── search.cy.js
+├── fixtures/
+├── support/
+|   ├── utils
+|   │   └── userData.js
+│   ├── commands.js
+│   └── e2e.js
+└── reports/
+```
 
-Use a [nossa comunidade](https://discord.gg/rdXbEvjsWu) para tirar dúvidas sobre o processo ou envie uma mensagem diretamente a um especialista no chat da plataforma. 
+## Casos de Teste Implementados
 
+### Obrigatórios ✅
+- [x] **Verificação de carregamento da home page**: Valida se todos os elementos principais estão carregando corretamente
+- [x] **Busca por "shirt"**: Testa a funcionalidade de busca e validação da página de resultados
+- [x] **Adição de produto ao carrinho**: Fluxo completo de seleção e adição de produto
+- [x] **Processo de checkout completo**: Validação do fluxo de finalização de compra
 
-Use a [nossa comunidade](https://discord.gg/rdXbEvjsWu) para tirar dúvidas sobre o processo ou envie uma mensagem diretamente a um especialista no chat da plataforma. 
+### Diferenciais ✅
+- [x] **Diferencial 1**: Busca por "shirt" com clique no último resultado sugerido e interceptação de requisições
+- [x] **Diferencial 2**: Criação de conta com tratamento inteligente de captcha
+- [x] **Diferencial 3**: Adição de produto aleatório da seção de moda masculina
+- [x] **Diferencial 4**: Adição de review em produto aleatório da seção masculina
+- [x] **Diferencial 5**: Geração automática de relatórios com Mochawesome
+
+## Abordagens Especiais
+
+### Tratamento de Captcha
+Foi visto que não há um tratamento de captch, porém caso tivesse uma das formas seria possível contornar o captcha no formulário de cadastro, implementando uma estratégia que utiliza interceptação de requisições e manipulação de elementos DOM quando necessário.
+
+### Dados de Teste
+Utilização da API randomuser.me para geração de dados fictícios conforme solicitado no desafio, garantindo que cada execução utilize informações únicas e realistas.
+
+### Interceptação de Requisições
+Implementação de interceptação de chamadas AJAX/XHR para aguardar o carregamento completo dos elementos antes de interagir com eles, especialmente na funcionalidade de busca.
+
+### Seleção Aleatória de Produtos
+Algoritmo implementado para seleção aleatória de produtos da seção masculina, garantindo variabilidade nos testes e cobertura de diferentes cenários.
+
+## Relatórios
+
+Os relatórios são gerados automaticamente após a execução dos testes utilizando o Mochawesome, disponíveis em:
+- `cypress/reports/`
+- Screenshots automáticos em caso de falhas
+- Vídeos da execução dos testes
+
+Para visualizar o relatório:
+```bash
+# Abrir relatório no navegador
+open cypress/reports/mochawesome.html
+```
+
+## Configurações do Projeto
+
+### cypress.config.js
+Configurações personalizadas incluindo:
+- Timeouts otimizados para a aplicação
+- Configuração de screenshots e vídeos
+- Configuração do Mochawesome reporter
+- BaseURL configurada para o ambiente de teste
+
+### Docker
+Containerização completa do ambiente de testes garantindo:
+- Consistência entre diferentes ambientes
+- Isolamento de dependências
+- Facilidade de execução em CI/CD
+
+## Arquivos Importantes
+
+- `.gitignore`: Configurado para Node.js, Cypress e arquivos de relatório
+- `docker-compose.yml`: Configuração para execução containerizada
+- `cypress.config.js`: Configurações principais do projeto
+- `package.json`: Dependências e scripts do projeto
+
+## Execução em CI/CD
+
+O projeto está preparado para execução em ambientes de CI/CD com:
+- Dockerfile otimizado para execução headless
+- Scripts npm configurados para diferentes cenários
+- Geração automática de artefatos (relatórios, screenshots, vídeos)
+
+## Troubleshooting
+
+### Problemas Comuns:
+1. **Timeout em elementos**: Verificar se os seletores estão corretos
+2. **Captcha bloqueando testes**: Executar em modo headless ou utilizar ambiente de desenvolvimento
+3. **Produtos não encontrados**: Verificar se o catálogo do site não foi alterado
+
+### Logs e Debug:
+```bash
+# Executar com logs detalhados
+npx cypress run --browser chrome --headed --no-exit
+
+# Debug de um teste específico
+npx cypress open --spec "cypress/e2e/search.cy.js"
+```
+
+---
+
+> This is a challenge by [Coodesh](https://coodesh.com/)
