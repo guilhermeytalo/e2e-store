@@ -29,3 +29,10 @@ export async function getUserData(useApi = false) {
     phone: user.phone.replace(/[^\d]/g, '').slice(0, 10)
   };
 }
+
+
+export const mockedLoginUser = {
+  email: 'contatoguilhermeytalo@outlook.com',
+  name: 'Guilherme Ytalo',
+  password: '#Teste123'
+};
