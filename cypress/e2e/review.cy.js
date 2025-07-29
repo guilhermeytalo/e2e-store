@@ -42,6 +42,6 @@ describe('Review Product', () => {
             console.log('Review submitted:', interception.response);
         });
 
-        cy.contains('You added').should('be.visible');
+        cy.contains('You submitted').should('be.visible');
     });
 });
