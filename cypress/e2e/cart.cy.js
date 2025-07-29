@@ -20,14 +20,16 @@ describe('Cart Page', () => {
     cy.get('.products').should('be.visible');
     cy.get('.products > :nth-child(5)').click();
 
-    cy.get('#option-label-size-143-item-166').click();
-    cy.get('#option-label-color-93-item-50').click();
+    cy.get('[aria-labelledby*="option-label-size"] .swatch-option').first().click();
+
+    cy.get('[aria-labelledby*="option-label-color"] .swatch-option').first().click();
+
     cy.get('button#product-addtocart-button').click();
 
     cy.wait('@addToCart').its('response.statusCode').should('eq', 200);
     cy.wait('@loadedCart').its('response.statusCode').should('eq', 200);
 
-    cy.get('.message-success').should('be.visible').and('contain', 'You added');
+    cy.contains('You added').should('be.visible');
   });
 
   it('should add a random product from Men section to cart', () => {
@@ -40,16 +42,18 @@ describe('Cart Page', () => {
         cy.wrap($items[randomIndex]).click();
       });
 
-    cy.get('#option-label-size-143-item-175').should('be.visible');
-    cy.get('#option-label-color-93-item-50').should('be.visible');
+    cy.get('[aria-labelledby*="option-label-size"] .swatch-option').should('be.visible');
+    cy.get('[aria-labelledby*="option-label-color"] .swatch-option').should('be.visible');
 
-    cy.get('#option-label-size-143-item-175').click();
-    cy.get('#option-label-color-93-item-50').click();
+    cy.get('[aria-labelledby*="option-label-size"] .swatch-option').first().click();
+
+    cy.get('[aria-labelledby*="option-label-color"] .swatch-option').first().click();
+
     cy.get('button#product-addtocart-button').click();
 
     cy.wait('@addToCart').its('response.statusCode').should('eq', 200);
     cy.wait('@loadedCart').its('response.statusCode').should('eq', 200);
 
-    cy.get('.message-success').should('be.visible').and('contain', 'You added');
+    cy.contains('You added').should('be.visible');
   });
 });
