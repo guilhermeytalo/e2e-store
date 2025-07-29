@@ -16,18 +16,16 @@ describe('Review Product', () => {
     it('should load the homepage go to the product and review', () => {
         cy.intercept('POST', '**/review/product/post/id/**').as('submitReview');
 
-
         cy.visit('/');
         cy.get('body').should('be.visible');
         cy.title().should('include', 'Home Page');
 
         cy.get('#ui-id-5').should('be.visible').and('contain', 'Men').click();
 
-        cy.get('.products-grid')
-            .then($items => {
-                const randomIndex = Math.floor(Math.random() * $items.length)
-                cy.wrap($items[randomIndex]).click()
-            });
+        cy.get('.products-grid').then($items => {
+            const randomIndex = Math.floor(Math.random() * $items.length)
+            cy.wrap($items[randomIndex]).click()
+        });
 
         cy.get('#tab-label-reviews-title').should('be.visible').and('contain', 'Reviews').click();
 

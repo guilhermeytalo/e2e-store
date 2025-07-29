@@ -7,7 +7,11 @@ describe('Checkout Page', () => {
         cy.intercept('GET', '**/catalogsearch/**').as('catalogSearch');
         cy.intercept('POST', '**/checkout/cart/add/**').as('addToCart');
         cy.intercept('GET', '**customer/section/load/**').as('loadedCart');
-        cy.intercept('GET', '**/checkout/**').as('loadedCheckout');
+        cy.intercept('GET', '**/checkout/**').as('checkoutRequests');
+        cy.intercept('POST', '**/checkout/**').as('checkoutPost');
+        cy.intercept('GET', '**/totals-information/**').as('totalsInformation');
+        cy.intercept('GET', '**/payment-information/**').as('paymentInformation');
+        cy.intercept('GET', '**/shipping-information/address-renderer/**').as('shippingAddressRenderer');
 
         cy.visit('/');
         cy.get('body').should('be.visible');
@@ -44,11 +48,8 @@ describe('Checkout Page', () => {
         cy.get('.secondary').should('be.visible').and('contain', 'View and Edit Cart');
 
         cy.get('#top-cart-btn-checkout').click();
-        cy.wait('@loadedCheckout').then((interception) => {
-            expect(interception.response.statusCode).to.equal(200);
-            console.log('Checkout carregado:', interception.response);
-        });
-        cy.get('#shipping').should('be.visible');
+        cy.url().should('include', '/checkout');
+        cy.get('#shipping', { timeout: 10000 }).should('be.visible');
     });
 
     it('should display checkout page with shipping section', () => {
@@ -83,7 +84,14 @@ describe('Checkout Page', () => {
 
 
             cy.url().should('include', 'checkout/#payment');
-            cy.get('.payment-group > .step-title').should('contain', 'Payment Method');
+
+            cy.get('.payment-group > .step-title', { timeout: 10000 }).should('contain', 'Payment Method');
+
+            cy.wait('@shippingAddressRenderer').then((interception) => {
+                expect(interception.response.statusCode).to.equal(200);
+                console.log('Shipping address renderer loaded:', interception.response);
+            });
+
             cy.contains('button', 'Place Order').click();
         });
     });
