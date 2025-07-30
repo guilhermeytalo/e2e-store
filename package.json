@@ -4,6 +4,9 @@
   "description": "Este é um desafio para que possamos ver as suas habilidades como QA/Tester.",
   "main": "index.js",
   "scripts": {
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "test:report": "cypress run --reporter cypress-mochawesome-reporter",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
